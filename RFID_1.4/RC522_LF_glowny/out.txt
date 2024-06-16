@@ -1,0 +1,3 @@
+Card UID: 
+PICC Type: MIFARE 1KB 
+

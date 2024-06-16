@@ -1,0 +1,6 @@
+17:33:32 **** Incremental Build of configuration Debug for project RC522_LF_glowny ****
+make -r all 
+make: Nothing to be done for `all'.
+
+17:33:32 Build Finished (took 147ms)
+

@@ -1,0 +1,97 @@
+ #include "mbed.h"
+ #include "MFRC522.h"
+#include <stdio.h>
+ //KL25Z Pins for MFRC522 SPI interface
+ #define SPI_MOSI    p5   	//P0_9 na LPC 1769
+ #define SPI_MISO    p6		//P0_8
+ #define SPI_SCLK    p7		//P0_7
+ #define SPI_CS      p8		//P0_6
+ // KL25Z Pin for MFRC522 reset
+ #define MF_RESET    RESET		//P0_0
+ // KL25Z Pins for Debug UART port
+ #define RX     p10	//przypisane do pinów USB debuggera( według schematu odpowiednio USBRX => P0_30, USBTX => P0_29)
+ #define TX     p9
+
+
+
+  //LED RGB z LPC1769
+ DigitalOut LedGreen (LED2);
+ DigitalOut LedBlue  (LED3);
+PwmOut s1(p42);
+PwmOut s2(p43);
+PwmOut s3(p44);
+PwmOut s4(p45);
+PwmOut s5(p46);
+PwmOut s6(p47);
+
+DigitalOut fwd1(p22);
+DigitalOut fwd(p24);
+DigitalOut fwd2(p49);
+DigitalOut fwd4(p51);
+DigitalOut fwd5(p53);
+DigitalOut fwd6(p25);
+DigitalOut rev1(p21);
+DigitalOut rev3(p23);
+DigitalOut rev2(p48);
+DigitalOut rev4(p50);
+DigitalOut rev5(p52);
+DigitalOut rev6(p26);
+
+ DigitalIn czujnik1(A0);
+ DigitalIn czujnik2(A1);
+ DigitalIn czujnik3(A2);
+ DigitalIn czujnik4(A3);
+ DigitalIn czujnik5(A4);
+ DigitalIn czujnik6(A5);
+
+ DigitalIn przycisk(p30);
+
+ Serial     DebugUART(TX, RX);
+ MFRC522    RfChip   (SPI_MOSI, SPI_MISO, SPI_SCLK, SPI_CS, MF_RESET);
+ void PWM_init(){
+ 	// PWM
+ 	s1.period(0.10f);      // 4 second period
+ 	s1.write(0.50f);      // 50% duty cycle, relative to period
+ 	s2.period(0.10f);      // 4 second period
+ 	s2.write(0.90f);      // 50% duty cycle, relative to period
+ 	s3.period(0.10f);      // 4 second period
+ 	s3.write(0.50f);      // 50% duty cycle, relative to period
+ 	s4.period(0.10f);      // 4 second period
+ 	s4.write(0.50f);      // 50% duty cycle, relative to period
+ 	s5.period(0.90f);      // 4 second period
+ 	s5.write(0.50f);      // 50% duty cycle, relative to period
+ 	s6.period(0.10f);      // 4 second period
+ 	s6.write(0.80f);
+ }
+
+
+ int main(void) {
+
+
+
+PWM_init();
+
+DebugUART.baud(9600);
+
+
+while(true){
+if(przycisk == true){
+DebugUART.printf("\nDziala");
+fwd1 =1;
+rev1 =0;
+continue;
+}
+else {
+	DebugUART.printf("\nNie dziala");
+	fwd1 =0;
+	rev1 =0;
+}
+}
+
+
+
+
+
+ 	 }
+
+
